@@ -1,9 +1,14 @@
 version: '3.8'
 
+networks:
+  gitea:
+    external: false
+  host:
+    external: true
+
 services:
   server:
-    image: gitea/gitea:1.15.2-rootless
-    container_name: gitea
+    image: gitea/gitea:latest
     environment:
       - USER_UID=1000
       - USER_GID=1000
@@ -14,9 +19,10 @@ services:
       - GITEA__database__PASSWD=gitea
     restart: always
     networks:
+      - host
       - gitea
     volumes:
-      - gitea:/data
+      - ./gitea:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
@@ -24,26 +30,18 @@ services:
       - "2222:2222"
     depends_on:
       - db
- 
+
   db:
     image: postgres:13
-    container_name: gitea-postgres
     restart: always
     environment:
-     - POSTGRES_USER=gitea
-     - POSTGRES_PASSWORD=gitea
-     - POSTGRES_DB=gitea
+      - POSTGRES_USER=gitea
+      - POSTGRES_PASSWORD=gitea
+      - POSTGRES_DB=gitea
     networks:
-     - gitea
+      - gitea
+    ports:
+      - "5432:5432"
     volumes:
-     - postgres:/var/lib/postgresql/data
+      - ./postgres:/var/lib/postgresql/data
 
-networks:
-  gitea:
-    external: false
-
-volumes:
-  gitea:
-    driver: local
-  postgres:
-    driver: local
