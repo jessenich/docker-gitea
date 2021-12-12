@@ -1,13 +1,11 @@
-version: "3"
+version: "3.8"
 
 networks:
   gitea:
     external: false
-  host:
-    external: true
 
 services:
-  server:
+  gitea:
     image: jessenich91/gitea:1.15.6
     environment:
       - USER_UID=1000
@@ -19,10 +17,9 @@ services:
       - GITEA__database__PASSWD=gitea
     restart: always
     networks:
-      - gitea
-      - host
+      - default
     volumes:
-      - ./gitea:/data
+      - ./data/gitea:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
@@ -42,7 +39,6 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - gitea
-      - host
+      - default
     volumes:
-      - ./mysql:/var/lib/mysql
+      - ./data/mysql:/var/lib/mysql
