@@ -392,7 +392,7 @@
 *.svg                   text                     eol=lf
 *.xsd                   text                     eol=lf
 *.xsl                   text                     eol=lf
-*.svg                   text                     eol=lf # SVG is an image, but we want to treat it as text given it's xml-like makeup.
+*.svg                   text                     eol=lf
 
 # Docker related files
 *Dockerfile*            text                     eol=lf
