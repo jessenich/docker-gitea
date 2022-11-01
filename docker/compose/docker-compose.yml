@@ -83,25 +83,25 @@ services:
     volumes:
       - ${DB_DATA_ROOT}:/var/lib/postgresql/data
 
-  reverse-proxy:
-    image: traefik:latest
-    command: --docker
-    ports:
-      - 10080:80
-      - 10443:443
-    labels:
-      - "traefik.enable=true"
-      - "traefik.backend=dashboard"
-      - "traefik.frontend.rule=Host:traefik.sycuryx.me"
-      - "traefik.port=8080"
-    networks:
-      - gitea-net-private
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./traefik.toml:/traefik.toml
-      - ./acme.json:/acme.json
-    container_name: gitea-reverse-proxy
-    restart: always
+  # reverse-proxy:
+  #   image: traefik:latest
+  #   command: --docker
+  #   ports:
+  #     - 10080:80
+  #     - 10443:443
+  #   labels:
+  #     - "traefik.enable=true"
+  #     - "traefik.backend=dashboard"
+  #     - "traefik.frontend.rule=Host:traefik.sycuryx.me"
+  #     - "traefik.port=8080"
+  #   networks:
+  #     - gitea-net-private
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - ./traefik.toml:/traefik.toml
+  #     - ./acme.json:/acme.json
+  #   container_name: gitea-reverse-proxy
+  #   restart: always
 
 secrets:
   security_key:
